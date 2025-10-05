@@ -1,0 +1,110 @@
+/* IncrediCubs theme inspired by incredibots.com */
+:root{
+  --navy:#071A2F;
+  --accent:#FF6F61;
+  --gold:#D98B1B;
+  --muted:#9AA6B2;
+  --card:#ffffff;
+  /* page background: warm amber tone for a cozy, inviting site background */
+  --bg: #FFD59A;
+  --max-width:1100px;
+}
+*{box-sizing:border-box}
+body{font-family:Poppins, Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;line-height:1.6;color:#0b1220;background:var(--bg);margin:0}
+.container{max-width:var(--max-width);margin:0 auto;padding:28px}
+.header-inner{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
+.site-header{background:var(--gold);color:var(--navy);position:sticky;top:0;z-index:40;border-bottom:1px solid rgba(11,26,47,0.08)}
+/* header uses a full-width container but with slight horizontal padding so items don't touch the viewport edge */
+.site-header .container{max-width:100%;padding-left:0;padding-right:0}
+.brand{display:flex;gap:12px;align-items:center;text-decoration:none;color:inherit}
+.nav{margin-left:0;display:flex;align-items:center;padding-left:0;gap:clamp(12px,2.5vw,36px)}
+.brand{margin-left:0;padding-left:12px;margin-right:0}
+.nav{margin-left:auto;padding-right:0}
+.nav a{margin:0;text-decoration:none;color:var(--navy);font-weight:600}
+/* ensure mobile stacking keeps left alignment */
+@media (max-width:560px){.site-header .container{padding-left:12px;padding-right:12px}}
+.logo{display:none}
+.mini-logo{width:36px;height:36px;border-radius:8px;object-fit:cover;box-shadow:0 6px 18px rgba(9,30,66,0.12)}
+.team-name{font-weight:700;font-size:1.125rem;color:var(--navy)}
+.hero--large{padding:64px 0 48px}
+.hero-inner{display:grid;grid-template-columns:1fr 420px;gap:28px;align-items:center}
+.hero-copy h1{font-size:48px;margin:0;color:var(--navy);letter-spacing:-1px}
+/* Top section background: warm gold gradient that matches the logo palette */
+.hero--large{background:linear-gradient(180deg, rgba(217,139,27,0.12), rgba(249,228,194,0.35));border-bottom:1px solid rgba(11,26,47,0.04)}
+
+/* hero cover that uses the team logo as a background image */
+.hero--cover{position:relative;overflow:hidden;padding:84px 0 64px}
+.hero--cover .hero-bg{position:absolute;inset:0;background-image:url('../images/IncrediCubs-Smaller.png'), url('../images/IncrediCubs.png');background-size:contain;background-position:center top;background-repeat:no-repeat;background-color:var(--gold);filter:brightness(1) saturate(1.02);opacity:1}
+.hero--cover .hero-bg:after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 18%, rgba(255,255,255,0.0) 0%, rgba(255,255,255,0.02) 18%, rgba(246,248,251,0.06) 38%, rgba(246,248,251,0.18) 65%, rgba(246,248,251,0.62) 100%);pointer-events:none}
+.hero-copy--over{position:relative;z-index:10;color:var(--navy);text-shadow:0 6px 18px rgba(255,255,255,0.12)}
+.hero--cover .btn-ghost{background:rgba(255,255,255,0.8);border-color:rgba(11,26,47,0.06);color:var(--navy)}
+.hero--cover .lead,.hero--cover .muted{color:var(--navy)}
+.lead{color:var(--navy);font-size:1.125rem;margin-top:8px}
+.muted{color:var(--muted)}
+.hero-art img{width:100%;height:auto;display:block;max-width:520px;margin:0 auto;border-radius:18px}
+/* remove standalone hero logo to avoid duplicate header logo */
+.hero-logo{display:none}
+.hero-ctas{margin-top:18px;display:flex;gap:12px}
+.btn{padding:12px 18px;border-radius:12px;text-decoration:none;font-weight:700;cursor:pointer;border:0}
+.btn-primary{background:var(--accent);color:white}
+.btn-ghost{background:transparent;border:2px solid var(--navy);color:var(--navy)}
+.card{background:var(--card);border-radius:14px;margin:20px 0;padding:22px;border:1px solid rgba(9,30,66,0.06);box-shadow:0 12px 30px rgba(9,30,66,0.12)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+.member{padding:18px;border-radius:12px;background:linear-gradient(180deg,#fff,#fbfdff);display:flex;gap:18px;align-items:flex-start}
+.member .avatar{width:96px;height:96px;border-radius:12px;flex:0 0 96px;background:transparent;display:flex;align-items:center;justify-content:center}
+.member .avatar img{width:96px;height:96px;object-fit:cover;border-radius:10px}
+.member .member-body{flex:1;min-width:0}
+.member .member-body h3{margin:0 0 6px 0}
+.member .member-body p{margin:6px 0;color:var(--muted);line-height:1.45}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.site-footer{padding:28px 0;color:var(--muted);text-align:center;background:transparent}
+.hint{color:var(--muted);font-size:0.95rem}
+input,textarea{width:100%;padding:10px;border-radius:10px;border:1px solid #E6EDF3;margin-top:6px;margin-bottom:12px}
+@media (max-width:920px){.hero-inner{grid-template-columns:1fr}.hero-copy h1{font-size:36px}.nav{gap:16px}}
+@media (min-width:920px){
+  /* enlarge hero artwork/logo on wide screens */
+  .hero-art-img{max-width:720px}
+  .hero--cover{padding:110px 0 80px}
+}
+@media (max-width:560px){.header-inner{flex-direction:column;align-items:flex-start}.nav{margin-top:8px}.member{flex-direction:row}}
+@media (max-width:420px){
+  .mini-logo{width:28px;height:28px}
+  .team-name{font-size:1rem}
+}
+
+@media (max-width:720px){
+  .member{flex-direction:column;align-items:flex-start}
+  .member .avatar{width:80px;height:80px;flex:0 0 80px}
+  .member .avatar img{width:80px;height:80px}
+}
+
+/* Active nav link styling for multi-page site */
+.nav a.active{background:rgba(0,0,0,0.06);padding:8px 12px;border-radius:10px;color:var(--navy)}
+.nav a[aria-current="page"]{font-weight:800;box-shadow:0 4px 12px rgba(9,30,66,0.06)}
+
+/* About section logo */
+.about-row{display:grid;grid-template-columns:1fr 360px;gap:28px;align-items:center}
+.about-copy{min-width:0}
+.about-aside{text-align:center}
+.about-logo{width:260px;max-width:100%;height:auto;display:inline-block;border-radius:12px;box-shadow:0 12px 36px rgba(9,30,66,0.08)}
+@media (max-width:920px){.about-row{grid-template-columns:1fr 280px}}
+@media (max-width:720px){.about-row{grid-template-columns:1fr;gap:12px}.about-aside{order:2}.about-copy{order:1}}
+
+/* Collage grid for team photos */
+.collage{column-count:3;column-gap:12px;margin-top:12px}
+.collage a{display:inline-block;overflow:hidden;width:100%;margin:0 0 12px;border-radius:12px;box-shadow:0 8px 20px rgba(9,30,66,0.06);break-inside:avoid;-webkit-column-break-inside:avoid}
+.collage img{width:100%;height:auto;object-fit:cover;display:block;transition:transform .25s ease}
+.collage a:hover img{transform:scale(1.06)}
+@media (max-width:920px){.collage{column-count:2}}
+@media (max-width:560px){.collage{column-count:1}}
+
+/* Simple slideshow styles used on season pages */
+.slideshow{position:relative;overflow:hidden;border-radius:12px;height:clamp(220px,38vh,420px);max-width:100%}
+.slideshow .slides{display:flex;transition:transform .5s ease;will-change:transform;height:100%;align-items:center}
+.slideshow .slides img{width:100%;flex:0 0 100%;height:100%;display:block;object-fit:contain;background:var(--bg)}
+.slideshow .slide-prev,.slideshow .slide-next{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,0.85);border:0;padding:8px 12px;border-radius:8px;cursor:pointer;font-size:20px}
+.slideshow .slide-prev{left:12px}
+.slideshow .slide-next{right:12px}
+.slideshow .slide-dots{position:absolute;left:50%;transform:translateX(-50%);bottom:12px;display:flex;gap:8px}
+.slideshow .slide-dots button{width:10px;height:10px;border-radius:50%;border:0;background:rgba(0,0,0,0.18);cursor:pointer}
+.slideshow .slide-dots button.active{background:var(--navy)}

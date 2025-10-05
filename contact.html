@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Contact — IncrediCubs</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html">
+        <img class="mini-logo" src="images/IncrediCubs-Smaller.png" alt="IncrediCubs logo">
+  <span class="team-name">The IncrediCubs</span>
+      </a>
+      <nav class="nav">
+        <a href="index.html">About</a>
+        <a href="team.html">Team</a>
+  <a href="our-journey.html">Our Journey</a>
+  <a href="community.html">Community</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="container card">
+      <h2>Contact</h2>
+      <p>Interested in joining, volunteering, or sponsoring? Reach out!</p>
+      <form id="contact-form">
+        <label for="name">Name</label>
+        <input id="name" name="name" required />
+
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" required />
+
+        <label for="message">Message</label>
+        <textarea id="message" name="message" rows="4"></textarea>
+
+        <button type="submit" class="btn">Send</button>
+        <p class="hint">This form does not send messages — it's a placeholder. See README to wire up email.</p>
+      </form>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; <span id="year"></span> IncrediCubs</p>
+    </div>
+  </footer>
+
+  <script src="js/script.js"></script>
+</body>
+</html>

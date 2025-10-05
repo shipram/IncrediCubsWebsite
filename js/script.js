@@ -1,0 +1,178 @@
+// Small JS to populate members and handle simple form UX
+document.getElementById('year').textContent = new Date().getFullYear();
+
+// Populate members list using embedded JSON if present, otherwise try fetching data/members.json
+async function loadMembers(){
+  // support both #members and the older #members-grid id
+  const container = document.getElementById('members') || document.getElementById('members-grid');
+  if(!container) return;
+
+  // Try embedded data first
+  const embedded = document.getElementById('members-data');
+  try{
+    let members = null;
+    if(embedded){
+      members = JSON.parse(embedded.textContent);
+    } else {
+      const res = await fetch('data/members.json');
+      if(res.ok) members = await res.json();
+    }
+
+    if(!members || !members.length){
+      container.innerHTML = '<p class="hint">Team roster is coming soon. Edit data/members.json or the embedded script in index.html to populate members.</p>';
+      return;
+    }
+
+    container.innerHTML = members.map(m=>{
+      const bioHtml = (m.bio||'').split('\n').map(p=>`<p>${p}</p>`).join('');
+      return `
+      <div class="member card">
+        <div class="avatar"><img src="${m.avatar}" alt="${m.name}"></div>
+        <div class="member-body">
+          <h3>${m.name}</h3>
+          ${bioHtml}
+        </div>
+      </div>
+    `}).join('\n');
+  }catch(err){
+    container.innerHTML = '<p class="hint">Team roster is coming soon. There was an error loading the roster.</p>';
+    console.error('loadMembers error', err);
+  }
+}
+
+loadMembers();
+
+// Contact form: placeholder that shows a small inline confirmation instead of blocking alert
+const form = document.getElementById('contact-form');
+if(form){
+  form.addEventListener('submit', e=>{
+    e.preventDefault();
+    const name = form.name.value || 'Friend';
+    form.reset();
+    const p = document.createElement('p');
+    p.className = 'hint';
+    p.textContent = `Thanks ${name}! Your message was received locally. To send email, wire up a backend or mailto link.`;
+    form.appendChild(p);
+  });
+}
+
+// Mark current nav link as active for multi-page navigation
+;(function markActiveNav(){
+  try{
+    const navLinks = document.querySelectorAll('.nav a');
+    if(!navLinks || !navLinks.length) return;
+    const path = window.location.pathname.split('/').pop() || 'index.html';
+    navLinks.forEach(a=>{
+      const href = a.getAttribute('href') || '';
+      if(href.endsWith(path) || (path==='index.html' && href==='index.html')){
+        a.classList.add('active');
+        a.setAttribute('aria-current','page');
+      }
+    });
+  }catch(e){console.error('markActiveNav error',e)}
+})();
+
+// Simple slideshow initializer: supports multiple .slideshow elements
+(function initSlides(){
+  try{
+    const slideshows = document.querySelectorAll('.slideshow');
+    slideshows.forEach(async slideshow=>{
+      const slidesWrap = slideshow.querySelector('.slides');
+      if(!slidesWrap) return;
+
+      // If a data-src is provided, try to fetch a JSON index and populate slides dynamically
+      const dataSrc = slideshow.dataset.src;
+      let imgs = [];
+      const populateFromIndex = async ()=>{
+        try{
+          if(!dataSrc) return;
+          const res = await fetch(dataSrc);
+          if(!res.ok) return;
+          const items = await res.json();
+          if(!Array.isArray(items) || items.length===0) return;
+          slidesWrap.innerHTML = items.map(it=>`<img src="${it.src}" alt="${(it.alt||'').replace(/"/g,'')}">`).join('\n');
+        }catch(e){ console.debug('populateFromIndex error', e); }
+      };
+
+      // If data-src exists, await population before selecting img nodes
+      const maybePopulate = dataSrc ? populateFromIndex() : Promise.resolve();
+
+      // Wait for potential population then collect images
+      await maybePopulate;
+      imgs = Array.from(slidesWrap.querySelectorAll('img'));
+      let index = 0;
+      const interval = parseInt(slideshow.dataset.interval || '5000',10);
+      let timer = null;
+
+      const update = (i)=>{
+        index = (i + imgs.length) % imgs.length;
+        slidesWrap.style.transform = `translateX(${-index * 100}%)`;
+        dots.forEach((d,di)=>d.classList.toggle('active', di===index));
+      };
+
+      // build controls
+      const prev = slideshow.querySelector('.slide-prev');
+      const next = slideshow.querySelector('.slide-next');
+      const dotsWrap = slideshow.querySelector('.slide-dots');
+      const dots = [];
+      imgs.forEach((_,i)=>{
+        const b = document.createElement('button');
+        b.addEventListener('click', ()=>{ update(i); resetTimer(); });
+        dotsWrap.appendChild(b);
+        dots.push(b);
+      });
+
+      if(prev) prev.addEventListener('click', ()=>{ update(index-1); resetTimer(); });
+      if(next) next.addEventListener('click', ()=>{ update(index+1); resetTimer(); });
+
+      function startTimer(){ if(timer) clearInterval(timer); timer = setInterval(()=>update(index+1), interval); }
+      function resetTimer(){ startTimer(); }
+
+      slideshow.addEventListener('mouseenter', ()=>{ if(timer) clearInterval(timer); });
+      slideshow.addEventListener('mouseleave', ()=>{ startTimer(); });
+
+      // init
+      update(0);
+      startTimer();
+    });
+  }catch(e){console.error('initSlides error',e)}
+})();
+
+
+// Shuffle collage items for a random layout on each load
+;(function shuffleCollage(){
+  try{
+    const container = document.querySelector('.collage');
+    if(!container) return;
+    const items = Array.from(container.children);
+    for(let i=items.length-1;i>0;i--){
+      const j = Math.floor(Math.random()*(i+1));
+      container.appendChild(items[j]);
+      items.splice(j,1);
+    }
+  }catch(e){console.error('shuffleCollage error',e)}
+})();
+
+// Fetch generated collage.json (if present) and render into the .collage container
+;(async function loadCollage(){
+  try{
+    const container = document.querySelector('.collage');
+    if(!container) return;
+    const res = await fetch('data/collage.json');
+    if(!res.ok) return; // leave the static markup in place
+    const items = await res.json();
+    if(!Array.isArray(items) || items.length===0) return;
+    container.innerHTML = items.map(it=>`<a href="${it.src}"><img src="${it.src}" alt="${it.alt||''}"></a>`).join('\n');
+
+    // After rendering, shuffle for random layout
+    const elems = Array.from(container.children);
+    for(let i=elems.length-1;i>0;i--){
+      const j = Math.floor(Math.random()*(i+1));
+      container.appendChild(elems[j]);
+      elems.splice(j,1);
+    }
+  }catch(err){
+    // non-fatal
+    console.debug('loadCollage:', err);
+  }
+})();

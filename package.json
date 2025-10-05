@@ -1,0 +1,14 @@
+{
+  "name": "incredicubs-website",
+  "version": "1.0.0",
+  "description": "Simple static site for the IncrediCubs FLL team",
+  "scripts": {
+    "build:collage": "node scripts/generate-collage.js",
+    "build:season": "node scripts/generate-season25.js",
+    "prestart": "npm run build:collage && npm run build:season",
+    "start": "npx http-server -c-1 -p 8080"
+  },
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}

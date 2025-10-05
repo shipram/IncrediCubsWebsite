@@ -1,0 +1,5 @@
+Team notes
+- Update practice times in index.html -> #schedule
+- Replace logo.svg with a team graphic (same path: images/logo.svg)
+- Add photos in images/ and reference them in index.html
+- If you want a multi-page site, copy index.html and adjust navigation

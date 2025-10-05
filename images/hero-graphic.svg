@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" preserveAspectRatio="xMidYMid meet">
+  <defs>
+    <linearGradient id="g1" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#FF6F61" />
+      <stop offset="1" stop-color="#FF8F7F" />
+    </linearGradient>
+  </defs>
+  <rect width="100%" height="100%" rx="20" fill="#071A2F" />
+  <g transform="translate(36,36)">
+    <rect x="0" y="0" width="528" height="328" rx="16" fill="url(#g1)" opacity="0.12" />
+    <g transform="translate(40,24)">
+      <circle cx="80" cy="80" r="64" fill="#0A2740" stroke="#fff" stroke-opacity="0.06" />
+      <rect x="180" y="30" width="220" height="120" rx="12" fill="#0A2740" />
+      <rect x="60" y="170" width="340" height="140" rx="12" fill="#0A2740" />
+      <g fill="#fff" opacity="0.95">
+        <text x="28" y="92" font-size="28" font-family="Poppins, sans-serif" font-weight="700">IncrediCubs</text>
+        <text x="32" y="212" font-size="14" font-family="Poppins, sans-serif">Robots • Research • Core Values</text>
+      </g>
+    </g>
+  </g>
+</svg>

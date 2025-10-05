@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Team — IncrediCubs</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html">
+        <img class="mini-logo" src="images/IncrediCubs-Smaller.png" alt="IncrediCubs logo">
+  <span class="team-name">The IncrediCubs</span>
+      </a>
+      <nav class="nav">
+        <a href="index.html">About</a>
+        <a href="team.html">Team</a>
+  <a href="our-journey.html">Our Journey</a>
+  <a href="community.html">Community</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="container card">
+      <h2>Team Members</h2>
+      <p>Our team members bring a mix of builders, coders, designers, and presenters.</p>
+      <div id="members" class="grid"></div>
+      <script id="members-data" type="application/json">
+        [
+          { "name": "Meher", "avatar": "images/avatar-1.svg", "bio": "Meher is a hands-on builder who loves designing robot attachments.\nThey focus on mechanical reliability and rapid prototyping.\nMeher mentors other team members on building techniques.\nOutside of robotics, Meher enjoys woodworking and puzzles.\nMeher is excited to improve mission scores this season." },
+          { "name": "Aradhya", "avatar": "images/avatar-2.svg", "bio": "Aradhya writes the control code and tunes sensors.\nThey develop reusable routines for navigation and manipulation.\nAradhya enjoys debugging and optimizing algorithms.\nThey also help document our team's design decisions.\nWhen not coding, Aradhya likes math puzzles and chess." },
+          { "name": "Avinash", "avatar": "images/avatar-3.svg", "bio": "Avinash researches the project topic and prepares presentations.\nThey coordinate team outreach and demonstrations.\nAvinash helps with strategy and mission planning.\nThey practice speaking and visual storytelling for events.\nOutside of FLL, Avinash enjoys photography and reading." }
+        ]
+      </script>
+    </section>
+    
+    <section id="collage" class="container card">
+      <h2>Team Collage</h2>
+      <p class="muted">Snapshots from our practices and events — replace these with your team photos.</p>
+      <div class="collage">
+        <a href="images/avatar-1.svg"><img src="images/avatar-1.svg" alt="Team photo 1"></a>
+        <a href="images/avatar-2.svg"><img src="images/avatar-2.svg" alt="Team photo 2"></a>
+        <a href="images/avatar-3.svg"><img src="images/avatar-3.svg" alt="Team photo 3"></a>
+        <a href="images/hero-graphic.svg"><img src="images/hero-graphic.svg" alt="Team photo 4"></a>
+        <a href="images/IncrediCubs-Smaller.png"><img src="images/IncrediCubs-Smaller.png" alt="Team photo 5"></a>
+        <a href="images/IncrediCubs.png"><img src="images/IncrediCubs.png" alt="Team photo 6"></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; <span id="year"></span> IncrediCubs</p>
+    </div>
+  </footer>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
