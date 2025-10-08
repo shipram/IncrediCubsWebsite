@@ -48,8 +48,10 @@ body{font-family:Poppins, Inter, system-ui, -apple-system, "Segoe UI", Roboto, A
 .btn{padding:12px 18px;border-radius:12px;text-decoration:none;font-weight:700;cursor:pointer;border:0}
 .btn-primary{background:var(--accent);color:white}
 .btn-ghost{background:transparent;border:2px solid var(--navy);color:var(--navy)}
-.card{background:var(--card);border-radius:14px;margin:20px 0;padding:22px;border:1px solid rgba(9,30,66,0.06);box-shadow:0 12px 30px rgba(9,30,66,0.12)}
+.card{background:var(--card);border-radius:14px;margin:20px auto;padding:22px;border:1px solid rgba(9,30,66,0.06);box-shadow:0 12px 30px rgba(9,30,66,0.12);max-width:980px;width:100%}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+/* When used for the members list, prefer a single-column vertical flow so each member and bio appears one after another */
+#members.grid{display:flex;flex-direction:column;gap:12px}
 .member{padding:18px;border-radius:12px;background:linear-gradient(180deg,#fff,#fbfdff);display:flex;gap:18px;align-items:flex-start}
 .member .avatar{width:96px;height:96px;border-radius:12px;flex:0 0 96px;background:transparent;display:flex;align-items:center;justify-content:center}
 .member .avatar img{width:96px;height:96px;object-fit:cover;border-radius:10px}
@@ -66,10 +68,25 @@ input,textarea{width:100%;padding:10px;border-radius:10px;border:1px solid #E6ED
   .hero-art-img{max-width:720px}
   .hero--cover{padding:110px 0 80px}
 }
-@media (max-width:560px){.header-inner{flex-direction:column;align-items:flex-start}.nav{margin-top:8px}.member{flex-direction:row}}
+@media (max-width:560px){
+  .header-inner{flex-direction:column;align-items:flex-start}
+  .nav{margin-top:8px}
+  /* allow nav items to wrap to multiple lines on small screens to avoid overflow */
+  .nav{flex-wrap:wrap;gap:10px}
+  .nav a{padding:6px 8px}
+  .member{flex-direction:row}
+}
 @media (max-width:420px){
   .mini-logo{width:28px;height:28px}
   .team-name{font-size:1rem}
+}
+
+/* Very small screens: hide nav behind a hamburger menu */
+@media (max-width:420px){
+  .nav-toggle{display:inline-flex;align-items:center;justify-content:center;border:0;background:transparent;padding:8px;margin-left:8px;cursor:pointer;font-size:18px}
+  .nav{display:none;flex-direction:column;gap:8px;width:100%;margin-top:8px}
+  .nav.open{display:flex}
+  .nav a{display:block;padding:8px 12px;border-radius:8px}
 }
 
 @media (max-width:720px){

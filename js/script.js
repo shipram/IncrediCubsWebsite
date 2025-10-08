@@ -42,17 +42,71 @@ async function loadMembers(){
 
 loadMembers();
 
-// Contact form: placeholder that shows a small inline confirmation instead of blocking alert
+// Inject a hamburger nav toggle for very small screens (<=420px)
+(function mobileNavToggle(){
+  try{
+    const header = document.querySelector('.header-inner');
+    if(!header) return;
+    const nav = document.querySelector('.nav');
+    if(!nav) return;
+
+    // Create toggle button
+    const btn = document.createElement('button');
+    btn.className = 'nav-toggle';
+    btn.setAttribute('aria-expanded','false');
+    btn.setAttribute('aria-label','Toggle navigation');
+    btn.innerHTML = '\u2630'; // simple hamburger glyph
+
+    // Insert before nav
+    header.appendChild(btn);
+
+    function toggle(){
+      const open = nav.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    }
+
+    btn.addEventListener('click', toggle);
+
+    // Close nav when a link is clicked (mobile)
+    nav.addEventListener('click', e=>{
+      if(e.target.tagName === 'A'){
+        nav.classList.remove('open');
+        btn.setAttribute('aria-expanded','false');
+      }
+    });
+
+    // Also close nav on Escape
+    document.addEventListener('keydown', e=>{ if(e.key==='Escape'){ nav.classList.remove('open'); btn.setAttribute('aria-expanded','false'); } });
+  }catch(e){console.error('mobileNavToggle',e)}
+})();
+
+// Contact form: open user's mail client with a prefilled message and show an inline confirmation
 const form = document.getElementById('contact-form');
 if(form){
   form.addEventListener('submit', e=>{
     e.preventDefault();
-    const name = form.name.value || 'Friend';
-    form.reset();
+    const name = (form.name && form.name.value) ? form.name.value.trim() : '';
+    const email = (form.email && form.email.value) ? form.email.value.trim() : '';
+    const message = (form.message && form.message.value) ? form.message.value.trim() : '';
+
+    // Build a mailto: URL with subject and body. Use encodeURIComponent to escape values.
+    const subject = encodeURIComponent(`IncrediCubs website message from ${name || email || 'visitor'}`);
+    let bodyText = '';
+    if(name) bodyText += `Name: ${name}\n`;
+    if(email) bodyText += `Email: ${email}\n\n`;
+    bodyText += message || '';
+    const body = encodeURIComponent(bodyText);
+    const mailto = `mailto:incredicubs@gmail.com?subject=${subject}&body=${body}`;
+
+    // Open the user's mail client. Some browsers block window.open for mailto so use location fallback.
+    try{ window.location.href = mailto; }catch(err){ window.open(mailto); }
+
+    // Show a local confirmation and reset the form
     const p = document.createElement('p');
     p.className = 'hint';
-    p.textContent = `Thanks ${name}! Your message was received locally. To send email, wire up a backend or mailto link.`;
+    p.textContent = `Thanks ${name || 'Friend'}! Your email client was opened to send the message.`;
     form.appendChild(p);
+    form.reset();
   });
 }
 
