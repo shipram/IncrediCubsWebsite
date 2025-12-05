@@ -134,17 +134,38 @@ if(form){
       const slidesWrap = slideshow.querySelector('.slides');
       if(!slidesWrap) return;
 
-      // If a data-src is provided, try to fetch a JSON index and populate slides dynamically
+      // If a data-src is provided, try to fetch a JSON index OR a directory listing and populate slides dynamically
       const dataSrc = slideshow.dataset.src;
       let imgs = [];
       const populateFromIndex = async ()=>{
         try{
           if(!dataSrc) return;
-          const res = await fetch(dataSrc);
+          const res = await fetch(dataSrc, { cache: 'no-store' });
           if(!res.ok) return;
-          const items = await res.json();
-          if(!Array.isArray(items) || items.length===0) return;
-          slidesWrap.innerHTML = items.map(it=>`<img src="${it.src}" alt="${(it.alt||'').replace(/"/g,'')}">`).join('\n');
+
+          const contentType = (res.headers.get('content-type') || '').toLowerCase();
+
+          // If the response is JSON (or the dataSrc ends with .json), parse it as an index
+          if(contentType.includes('application/json') || dataSrc.toLowerCase().endsWith('.json')){
+            const items = await res.json();
+            if(!Array.isArray(items) || items.length===0) return;
+            slidesWrap.innerHTML = items.map(it=>`<img src="${it.src}" alt="${(it.alt||'').replace(/\"/g,'')}">`).join('\n');
+            return;
+          }
+
+          // Otherwise try to parse an HTML directory listing (http-server and many static servers expose this)
+          const text = await res.text();
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(text, 'text/html');
+          const anchors = Array.from(doc.querySelectorAll('a'));
+          const imgExt = /\.(jpe?g|png|gif|webp|svg)$/i;
+          const base = new URL(dataSrc, window.location.href).href;
+          const links = anchors
+            .map(a=>a.getAttribute('href'))
+            .filter(h=>h && imgExt.test(h))
+            .map(h=> new URL(h, base).href);
+
+          if(links.length) slidesWrap.innerHTML = links.map(src=>`<img src="${src}" alt="">`).join('\n');
         }catch(e){ console.debug('populateFromIndex error', e); }
       };
 
