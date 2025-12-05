@@ -5,7 +5,8 @@
   "scripts": {
     "build:collage": "node scripts/generate-collage.js",
     "build:season": "node scripts/generate-season25.js",
-    "prestart": "npm run build:collage && npm run build:season",
+    "build:events": "node scripts/generate-events.js",
+    "prestart": "npm run build:collage && npm run build:season && npm run build:events",
     "start": "npx http-server -c-1 -p 8080"
   },
   "devDependencies": {
